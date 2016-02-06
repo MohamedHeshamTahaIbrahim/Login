@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Login</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="username_sign_up">Username Sign up</string>
+    <string name="password_sign_up">Password Sign up</string>
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+    <string name="title_activity_sign_up">SignUp</string>
+    <string name="email">mohamed.hesham@gmail.com</string>
+    <string name="confirm_password">ConfirmPassword</string>
+    <string name="next">Next</string>
+    <string name="title_activity_first_signup">firstSignup</string>
+    <string name="title_activity_second_sign_up">SecondSignUp</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="gender">Gender</string>
+
+</resources>
