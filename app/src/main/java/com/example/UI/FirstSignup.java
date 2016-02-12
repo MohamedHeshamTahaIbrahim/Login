@@ -94,8 +94,14 @@ public class FirstSignup extends ActionBarActivity {
                    /* SecondSignUp.PlaceholderFragment mm=new SecondSignUp.PlaceholderFragment();
                     mm.setemail(email.getText().toString());
 */
+
                     if(emailverification.equals("email valid")&&passwordverification.equals("password equal confirmpassword")){
-                        Intent next=new Intent(getContext(),SecondSignUp.class);
+                        Intent intent=new Intent(getActivity(),SecondSignUp.class);
+                      intent.putExtra("email",email.getText().toString());
+                      intent.putExtra("password",password.getText().toString());
+                       intent.putExtra("confirmpassword",confirmpassword.getText().toString());
+
+                        getActivity().startActivity(intent);
                       /*  SecondSignUp second=new SecondSignUp();
                         Bundle uu=new Bundle();
                         uu.putString("email",email.getText().toString());
@@ -107,12 +113,23 @@ public class FirstSignup extends ActionBarActivity {
                          /*Problem here*/
 
 
-                        Bundle bundle=new Bundle();
+ /*                       Bundle bundle=new Bundle();
                         bundle.putString(emaild,email.getText().toString());
                         SecondSignUp.PlaceholderFragment m=new SecondSignUp.PlaceholderFragment();
                         m.setArguments(bundle);
+*/
 
-                        startActivity(next);
+                       /* Bundle arguments=new Bundle();
+                        arguments.putString("email",email.getText().toString());
+                        SecondSignUp.PlaceholderFragment ss=new SecondSignUp.PlaceholderFragment();
+                        ss.setArguments(arguments);
+                        */
+
+                      /*  next.putExtra("email",email.getText().toString());
+                        next.putExtra("password",password.getText().toString());
+                        next.putExtra("confirmpassword",password.getText().toString());
+*/
+
                     }
 
                 }

@@ -1,6 +1,7 @@
 package Communication;
 
 import Data.LoginModel;
+import Data.SignUpModel;
 
 /**
  * Created by محمد on 01/02/2016.
@@ -11,10 +12,12 @@ public class LoginCommunication {
 
     }*/
     LoginModel data=new LoginModel();
+    SignUpModel d=new SignUpModel();
     public int isUservalid(String username,String password){
         data.setUsername("mohamed");
         data.setPassword("dodoo_12FK");
-        if(username.equals(data.getUsername())&&password.equals(data.getPassword())){
+
+        if(username.equals(d.getEmail())&&password.equals(d.getPassw())){
 
             return 1;
         }
