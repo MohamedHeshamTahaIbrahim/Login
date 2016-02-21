@@ -59,12 +59,13 @@ public class FirstSignup extends ActionBarActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
-       EditText email;
-       EditText password;
-       EditText confirmpassword;
+       EditText email_ed;
+       EditText password_ed;
+       EditText confirm_Password_ed;
        Button next;
         String emaild;
-      SignupController control=new SignupController();
+      SignupController signupController=new SignupController();
+        UIConstant uiConstant=new UIConstant();
         public PlaceholderFragment() {
         }
 
@@ -72,21 +73,27 @@ public class FirstSignup extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_first_signup, container, false);
-            email=(EditText)rootView.findViewById(R.id.email);
-            password=(EditText)rootView.findViewById(R.id.pass);
-            confirmpassword=(EditText)rootView.findViewById(R.id.confirmpassword);
+            email_ed=(EditText)rootView.findViewById(R.id.email);
+            password_ed=(EditText)rootView.findViewById(R.id.pass);
+            confirm_Password_ed=(EditText)rootView.findViewById(R.id.confirmpassword);
             next=(Button)rootView.findViewById(R.id.next_button);
            // String nn=email.getText().toString();
 
             next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                String emailverification;
-                String passwordverification;
-                  emailverification= control.validateEmail(email.getText().toString());
-                 Toast.makeText(getContext(),emailverification,Toast.LENGTH_SHORT).show();
-                 passwordverification=control.checkPasswordequal(password.getText().toString(),confirmpassword.getText().toString());
-                  Toast.makeText(getContext(),passwordverification,Toast.LENGTH_SHORT).show();
+               boolean emailverification;
+                boolean passwordverification;
+                  emailverification= signupController.IsEmailVerification(email_ed.getText().toString());
+                    if(emailverification==false){
+                        email_ed.setError("email is not valid");
+                    }
+                 //Toast.makeText(getContext(),"result:"+emailverification,Toast.LENGTH_SHORT).show();
+                 passwordverification=signupController.IsPasswordVerification(password_ed.getText().toString(),confirm_Password_ed.getText().toString());
+                 // Toast.makeText(getContext(),"passresult:"+passwordverification,Toast.LENGTH_SHORT).show();
+                   if(passwordverification==false){
+                       password_ed.setError("paassword is not match confirm password");
+                   }
                          /* FirstSignup jj=new FirstSignup();
                     Bundle bundle=new Bundle();
                     bundle.putString("email",email.getText().toString());
@@ -95,13 +102,15 @@ public class FirstSignup extends ActionBarActivity {
                     mm.setemail(email.getText().toString());
 */
 
-                    if(emailverification.equals("email valid")&&passwordverification.equals("password equal confirmpassword")){
-                        Intent intent=new Intent(getActivity(),SecondSignUp.class);
-                      intent.putExtra("email",email.getText().toString());
-                      intent.putExtra("password",password.getText().toString());
-                       intent.putExtra("confirmpassword",confirmpassword.getText().toString());
+                    if(emailverification==true&&passwordverification==true){
+                       ScreenManager screenManager=new ScreenManager();
+                        screenManager.openSecondsignup(getActivity(),email_ed.getText().toString(),password_ed.getText().toString(),confirm_Password_ed.getText().toString());
+                      /*  Intent intent=new Intent(getActivity(),SecondSignUp.class);
+                      intent.putExtra(uiConstant.emailValid,email.getText().toString());
+                      intent.putExtra(uiConstant.passwordValid,password.getText().toString());
+                       intent.putExtra(uiConstant.confirmPassvalid,confirmpassword.getText().toString());
 
-                        getActivity().startActivity(intent);
+                        getActivity().startActivity(intent);*/
                       /*  SecondSignUp second=new SecondSignUp();
                         Bundle uu=new Bundle();
                         uu.putString("email",email.getText().toString());

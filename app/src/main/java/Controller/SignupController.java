@@ -7,18 +7,18 @@ import java.util.regex.Pattern;
  * Created by محمد on 04/02/2016.
  */
 public class SignupController {
-    public String validateEmail(String email) {
+    public boolean IsEmailVerification(String email) {
 
         Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
         Matcher matcher = pattern.matcher(email);
-        if(matcher.matches()==true){
+        /*if(matcher.matches()==true){
             return "email valid";
         }
         else {
             return "email not valid";
-        }
+        }*/
 
-
+    return matcher.matches();
     }
     /*public String checkPasswordlength(String password){
         if(password.length()>0){
@@ -29,38 +29,38 @@ public class SignupController {
             return "please enter password";
         }
     }*/
-   public String checkPasswordequal(String password,String confirmpassword){
+   public boolean IsPasswordVerification(String password,String confirmpassword){
 
        if(password.length()>0&&password.equals(confirmpassword)){
-           return "password equal confirmpassword";
+           return true;
        }
        else {
-           return "password not equal confirmpassword";
+           return false;
        }
    }
-    public String checkPhoneavailable(String phone){
+    public boolean IsPhoneVerification(String phone){
         if(phone.length()>0){
-            return "Phone available";
+            return true;
         }
         else {
-            return "please enter phone";
+            return false;
         }
     }
 
-    public String checkAddressavailable(String address){
+    public boolean IsAddressVerification(String address){
        if(address.length()>0){
-           return "Address available";
+           return true;
        }
        else {
-           return "please enter address";
+           return false;
        }
    }
-    public String checkGenderavailable(String gender){
+    public boolean IsGenderVerification(String gender){
         if(gender.length()>0){
-            return "Gender avaliable";
+            return true;
         }
         else{
-            return "please enter gender";
+            return false;
         }
     }
 

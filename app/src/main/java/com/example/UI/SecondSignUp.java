@@ -30,6 +30,7 @@ import Data.SignUpModel;
 
 public class SecondSignUp extends ActionBarActivity {
 static String email,password,confirmpassword;
+   UIConstant uiConstant=new UIConstant();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +42,9 @@ static String email,password,confirmpassword;
         f.setArguments(bundle);
         */
         if (savedInstanceState == null) {
-            email=getIntent().getExtras().getString("email");
-            password=getIntent().getExtras().getString("password");
-            confirmpassword=getIntent().getExtras().getString("confirmpassword");
+            email=getIntent().getExtras().getString(uiConstant.emailValid);
+            password=getIntent().getExtras().getString(uiConstant.passwordValid);
+            confirmpassword=getIntent().getExtras().getString(uiConstant.confirmPassvalid);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
@@ -78,13 +79,13 @@ static String email,password,confirmpassword;
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
-      EditText phone,address,gender;
-      Button signup;
+      EditText phone_ed,address_ed,gender_ed;
+      Button signup_btn;
         TextView m;
         private DatabaseHelper databaseHelper = null;
 
 
-      SignupController controll=new SignupController();
+      SignupController signupController=new SignupController();
        SignupCommunication s=new SignupCommunication();
       final SignUpModel model=new SignUpModel();
         String h;
@@ -112,11 +113,11 @@ static String email,password,confirmpassword;
             confirmpassword=getArguments().getString("confirmpassword");
 */
 //String dd=getArguments().getString("email");
-            phone=(EditText)rootView.findViewById(R.id.phone);
-            address=(EditText)rootView.findViewById(R.id.address);
-            gender=(EditText)rootView.findViewById(R.id.gender);
+            phone_ed=(EditText)rootView.findViewById(R.id.phone);
+            address_ed=(EditText)rootView.findViewById(R.id.address);
+            gender_ed=(EditText)rootView.findViewById(R.id.gender);
             m=(TextView)rootView.findViewById(R.id.textView);
-            signup=(Button)rootView.findViewById(R.id.signup_button);
+            signup_btn=(Button)rootView.findViewById(R.id.signup_button);
             //m.setText(email);
             /*String y=this.getArguments().getString("email");
             m.setText(y);*/
@@ -125,25 +126,33 @@ static String email,password,confirmpassword;
             password=getArguments().getString("password");
             confirmpassword=getArguments().getString("confirmpassword");*/
             //email.ge
-            m.setText(model.getEmail());
-            signup.setOnClickListener(new View.OnClickListener() {
+            m.setText(email);
+            signup_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String phoneavailable = controll.checkPhoneavailable(phone.getText().toString());
-                    Toast.makeText(getContext(), phoneavailable, Toast.LENGTH_SHORT).show();
-
-                    String addressavailable = controll.checkAddressavailable(address.getText().toString());
-                    Toast.makeText(getContext(), addressavailable, Toast.LENGTH_SHORT).show();
-                    String genderavailable = controll.checkGenderavailable(gender.getText().toString());
-                    Toast.makeText(getContext(), genderavailable, Toast.LENGTH_SHORT).show();
-                    String result = s.checkSignup(email, password, confirmpassword, phone.getText().toString(), address.getText().toString(), gender.getText().toString());
-                    if (result.equals("right")){
+                    boolean phoneavailable = signupController.IsPhoneVerification(phone_ed.getText().toString());
+                  //  Toast.makeText(getContext(),"phoneresult:"+phoneavailable, Toast.LENGTH_SHORT).show();
+                      if(phoneavailable==false){
+                          phone_ed.setError("phone is not valid");
+                      }
+                    boolean addressavailable = signupController.IsAddressVerification(address_ed.getText().toString());
+                   // Toast.makeText(getContext(), "addressresult"+addressavailable, Toast.LENGTH_SHORT).show();
+                    if(addressavailable==false){
+                        address_ed.setError("address is not valid");
+                    }
+                    boolean genderavailable = signupController.IsGenderVerification(gender_ed.getText().toString());
+                    //Toast.makeText(getContext(), "genderresult"+genderavailable, Toast.LENGTH_SHORT).show();
+                   if(genderavailable==false){
+                       gender_ed.setError("gender is not valid");
+                   }
+                   boolean result = s.checkSignup(email, password, confirmpassword, phone_ed.getText().toString(), address_ed.getText().toString(), gender_ed.getText().toString());
+                    if (result==true){
                         model.setEmail(email);
                     model.setPassw(password);
                     model.setConfirmpassword(confirmpassword);
-                    model.setPhone(phone.getText().toString());
-                    model.setAddress(address.getText().toString());
-                    model.setGender(gender.getText().toString());
+                    model.setPhone(phone_ed.getText().toString());
+                    model.setAddress(address_ed.getText().toString());
+                    model.setGender(gender_ed.getText().toString());
                     try {
                         final Dao<SignUpModel, String> signupDao = getHelper().getSignupmodelDao();
                         signupDao.create(model);
